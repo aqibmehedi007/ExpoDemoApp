@@ -1,20 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+// Import screens (we'll create these next)
+import HomeScreen from './screens/HomeScreen';
+import DetailsScreen from './screens/DetailsScreen';
+import FormScreen from './screens/FormScreen';
+import PrivacyPolicyScreen from './screens/PrivacyPolicyScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator 
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#1a1a1a',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      >
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ title: 'Assessment App' }}
+        />
+        <Stack.Screen 
+          name="Details" 
+          component={DetailsScreen} 
+          options={{ title: 'Item Details' }}
+        />
+        <Stack.Screen 
+          name="Form" 
+          component={FormScreen} 
+          options={{ title: 'Add Item' }}
+        />
+        <Stack.Screen 
+          name="PrivacyPolicy" 
+          component={PrivacyPolicyScreen} 
+          options={{ title: 'Privacy Policy' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
