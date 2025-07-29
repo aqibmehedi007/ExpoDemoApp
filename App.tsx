@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { NotificationService } from './utils/notifications';
+import { FirebaseService } from './utils/firebase';
 
 // Import screens
 import HomeScreen from './screens/HomeScreen';
@@ -27,7 +28,27 @@ export default function App() {
       }
     };
 
+    // Setup Firebase notifications
+    const setupFirebase = async () => {
+      try {
+        // Request Firebase permission
+        const hasFirebasePermission = await FirebaseService.requestUserPermission();
+        if (hasFirebasePermission) {
+          // Get FCM token
+          const fcmToken = await FirebaseService.getFCMToken();
+          if (fcmToken) {
+            console.log('FCM Token:', fcmToken);
+            // In a real app, you would send this token to your server
+            // For demo purposes, we'll just log it
+          }
+        }
+      } catch (error) {
+        console.error('Firebase setup error:', error);
+      }
+    };
+
     setupNotifications();
+    setupFirebase();
 
     // Listen for notifications when app is in foreground
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -45,6 +66,29 @@ export default function App() {
       }
     });
 
+    // Listen for Firebase foreground messages
+    const unsubscribeFirebase = FirebaseService.onMessage((remoteMessage) => {
+      console.log('Firebase foreground message:', remoteMessage);
+      Alert.alert(
+        remoteMessage.notification?.title || 'New Message',
+        remoteMessage.notification?.body || 'You have a new notification'
+      );
+    });
+
+    // Listen for Firebase notification open events
+    const unsubscribeFirebaseOpen = FirebaseService.onNotificationOpenedApp((remoteMessage) => {
+      console.log('Firebase notification opened app:', remoteMessage);
+      // Handle navigation based on notification data
+    });
+
+    // Check if app was opened from Firebase notification
+    FirebaseService.getInitialNotification().then((remoteMessage) => {
+      if (remoteMessage) {
+        console.log('App opened from Firebase notification:', remoteMessage);
+        // Handle initial notification
+      }
+    });
+
     return () => {
       if (notificationListener.current) {
         Notifications.removeNotificationSubscription(notificationListener.current);
@@ -52,6 +96,8 @@ export default function App() {
       if (responseListener.current) {
         Notifications.removeNotificationSubscription(responseListener.current);
       }
+      unsubscribeFirebase();
+      unsubscribeFirebaseOpen();
     };
   }, []);
 
