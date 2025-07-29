@@ -7,7 +7,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
-    "jsEngine": "hermes",
     "description": "A React Native app for collecting and managing character information with modern UI and animations.",
     "primaryColor": "#007AFF",
     "splash": {
@@ -17,11 +16,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.charactercollection.app",
+      "bundleIdentifier": "com.yourcompany.charactercollection",
       "buildNumber": "1",
       "infoPlist": {
-        "NSUserNotificationUsageDescription": "This app uses notifications to keep you updated about new characters and app activities.",
-        "UIBackgroundModes": ["remote-notification"]
+        "NSUserNotificationUsageDescription": "This app uses notifications to keep you updated about new characters and app activities."
       }
     },
     "android": {
@@ -47,9 +45,7 @@
           "icon": "./assets/icon.png",
           "color": "#007AFF"
         }
-      ],
-      "@react-native-firebase/app",
-      "@react-native-firebase/messaging"
+      ]
     ],
     "extra": {
       "eas": {

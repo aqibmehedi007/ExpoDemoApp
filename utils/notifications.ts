@@ -2,6 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
 // Configure how notifications are handled when app is in foreground
+// Note: Push notifications are limited in Expo Go but local notifications work fine
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
@@ -41,13 +42,12 @@ export class NotificationService {
     }
   }
 
-  // Get the device's push token
+  // Get the device's push token (optional in Expo Go)
   static async getPushToken(): Promise<string | null> {
     try {
-      const token = await Notifications.getExpoPushTokenAsync({
-        projectId: 'your-project-id', // This will be auto-detected in Expo
-      });
-      return token.data;
+      // In Expo Go, push tokens are deprecated, so we'll skip this
+      console.log('Push tokens are not available in Expo Go');
+      return null;
     } catch (error) {
       console.error('Error getting push token:', error);
       return null;

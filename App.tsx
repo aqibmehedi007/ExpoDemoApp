@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { NotificationService } from './utils/notifications';
-import { FirebaseService } from './utils/firebase';
 
 // Import navigators
 import BottomTabNavigator from './navigation/BottomTabNavigator';
@@ -21,34 +20,18 @@ export default function App() {
   useEffect(() => {
     // Request notification permissions on app start
     const setupNotifications = async () => {
-      const hasPermission = await NotificationService.requestPermissions();
-      if (hasPermission) {
-        // Send welcome notification
-        await NotificationService.sendWelcomeNotification();
-      }
-    };
-
-    // Setup Firebase notifications
-    const setupFirebase = async () => {
       try {
-        // Request Firebase permission
-        const hasFirebasePermission = await FirebaseService.requestUserPermission();
-        if (hasFirebasePermission) {
-          // Get FCM token
-          const fcmToken = await FirebaseService.getFCMToken();
-          if (fcmToken) {
-            console.log('FCM Token:', fcmToken);
-            // In a real app, you would send this token to your server
-            // For demo purposes, we'll just log it
-          }
+        const hasPermission = await NotificationService.requestPermissions();
+        if (hasPermission) {
+          // Send welcome notification
+          await NotificationService.sendWelcomeNotification();
         }
       } catch (error) {
-        console.error('Firebase setup error:', error);
+        console.log('Notification setup error (normal in Expo Go):', error);
       }
     };
 
     setupNotifications();
-    setupFirebase();
 
     // Listen for notifications when app is in foreground
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -66,28 +49,10 @@ export default function App() {
       }
     });
 
-    // Listen for Firebase foreground messages
-    const unsubscribeFirebase = FirebaseService.onMessage((remoteMessage) => {
-      console.log('Firebase foreground message:', remoteMessage);
-      Alert.alert(
-        remoteMessage.notification?.title || 'New Message',
-        remoteMessage.notification?.body || 'You have a new notification'
-      );
-    });
-
-    // Listen for Firebase notification open events
-    const unsubscribeFirebaseOpen = FirebaseService.onNotificationOpenedApp((remoteMessage) => {
-      console.log('Firebase notification opened app:', remoteMessage);
-      // Handle navigation based on notification data
-    });
-
-    // Check if app was opened from Firebase notification
-    FirebaseService.getInitialNotification().then((remoteMessage) => {
-      if (remoteMessage) {
-        console.log('App opened from Firebase notification:', remoteMessage);
-        // Handle initial notification
-      }
-    });
+    // Firebase messaging is not available in Expo Go
+    // These would be used in a development build or production app
+    const unsubscribeFirebase = () => {};
+    const unsubscribeFirebaseOpen = () => {};
 
     return () => {
       if (notificationListener.current) {
