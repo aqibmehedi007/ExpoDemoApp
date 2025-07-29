@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator }
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../store/useStore';
 import { NotificationService } from '../utils/notifications';
+import AppHeader from '../components/AppHeader';
 import Animated, { 
   FadeInDown, 
   FadeInUp, 
@@ -66,6 +67,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <AppHeader title="Character Collection" />
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -75,20 +77,8 @@ export default function HomeScreen() {
       />
       <Animated.View 
         entering={FadeInUp.delay(500).springify()}
-        style={styles.buttonContainer}
+        style={styles.testButtonContainer}
       >
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => (navigation as any).navigate('Form')}
-        >
-          <Text style={styles.buttonText}>Add Item</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => (navigation as any).navigate('PrivacyPolicy')}
-        >
-          <Text style={styles.buttonText}>Privacy Policy</Text>
-        </TouchableOpacity>
         <TouchableOpacity 
           style={[styles.button, styles.testButton]}
           onPress={() => NotificationService.sendTestNotification()}
@@ -138,6 +128,10 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  testButtonContainer: {
+    padding: 16,
+    alignItems: 'center',
   },
   button: {
     backgroundColor: '#007AFF',

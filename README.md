@@ -6,19 +6,27 @@ A modern React Native app built with Expo that demonstrates full-stack mobile de
 
 - **REST API Integration** - Fetches character data from Rick & Morty API
 - **State Management** - Uses Zustand for global state management
-- **Navigation** - React Navigation with multiple screens
+- **Navigation** - React Navigation with bottom tabs and stack navigation
+- **Professional UI** - App header with notification bell and profile avatar
 - **Forms** - React Hook Form with validation
 - **Animations** - Reanimated animations throughout the app
 - **Push Notifications** - Expo notifications with permission handling
 - **Modern UI/UX** - Dark theme with responsive design
 - **Privacy Policy** - Built-in privacy policy screen
 
-## 📱 Screens
+## 📱 Screens & Navigation
 
-1. **Home Screen** - Displays character list with animations
-2. **Details Screen** - Shows character details with image
-3. **Form Screen** - Add new characters with validation
-4. **Privacy Policy** - App privacy information
+### Bottom Tab Navigation
+1. **Characters Tab** - Displays character list with animations and test notification button
+2. **Add Character Tab** - Form to add new characters with validation
+3. **Privacy Policy Tab** - App privacy information
+
+### Stack Navigation
+- **Details Screen** - Shows character details with image (accessible from Characters tab)
+
+### App Header
+- **Professional Header** - App title, notification bell icon, and profile avatar
+- **Consistent Design** - Dark theme with smooth animations
 
 ## 🛠️ Tech Stack
 
@@ -26,10 +34,11 @@ A modern React Native app built with Expo that demonstrates full-stack mobile de
 - **Expo** - Development platform and tools
 - **TypeScript** - Type safety
 - **Zustand** - State management
-- **React Navigation** - Navigation library
+- **React Navigation** - Bottom tabs and stack navigation
 - **React Hook Form** - Form handling
 - **Reanimated** - Animations
 - **Expo Notifications** - Push notifications
+- **Ionicons** - Professional icons for UI elements
 
 ## 📋 Prerequisites
 
@@ -166,11 +175,13 @@ Update `app.json` with your specific details:
 ## 🧪 Testing
 
 ### Manual Testing
-1. **Navigation** - Test all screen transitions
-2. **API Integration** - Verify data loading
-3. **Forms** - Test form validation and submission
-4. **Animations** - Check all animations work smoothly
-5. **Notifications** - Test permission and notification sending
+1. **Navigation** - Test bottom tab navigation and stack navigation
+2. **App Header** - Verify header displays correctly on all screens
+3. **API Integration** - Verify data loading from Rick & Morty API
+4. **Forms** - Test form validation and submission
+5. **Animations** - Check all animations work smoothly
+6. **Notifications** - Test permission and notification sending
+7. **UI Elements** - Test notification bell and profile avatar interactions
 
 ### Automated Testing
 ```bash
@@ -183,7 +194,8 @@ npm test
 - ✅ **Metadata** - Complete app information
 - ✅ **Privacy Policy** - Built-in privacy policy screen
 - ✅ **Push Notifications** - Proper permission handling
-- ✅ **Modern UI/UX** - Responsive and accessible design
+- ✅ **Modern UI/UX** - Professional header and bottom navigation
+- ✅ **Navigation** - Bottom tabs and stack navigation
 - ✅ **Build Configuration** - Ready for app store submission
 
 ## 🚨 Troubleshooting
@@ -218,14 +230,23 @@ This project is created for assessment purposes.
 ## 👨‍💻 Developer
 
 Created as part of a React Native + Expo developer assessment demonstrating:
-- Modern React Native development
+- Modern React Native development with TypeScript
 - State management with Zustand
-- Navigation and animations
+- Professional navigation with bottom tabs and stack navigation
+- Smooth animations with Reanimated
 - Push notification implementation
+- Professional UI/UX with app header
 - App store preparation
-- Professional documentation
+- Comprehensive documentation
 
 ## 🔄 Version History
+
+- **v1.1.0** - Professional UI Update
+  - Added professional app header with notification bell and profile avatar
+  - Implemented bottom tab navigation
+  - Enhanced navigation structure with stack navigation
+  - Improved UI/UX with consistent dark theme
+  - Added Ionicons for professional icons
 
 - **v1.0.0** - Initial release with all core features
   - REST API integration

@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../store/useStore';
 import { NotificationService } from '../utils/notifications';
+import AppHeader from '../components/AppHeader';
 import Animated, { 
   FadeInDown, 
   FadeInUp, 
@@ -45,12 +46,16 @@ export default function FormScreen() {
     await NotificationService.sendItemAddedNotification(data.name);
     
     Alert.alert('Success', 'Item added successfully!', [
-      { text: 'OK', onPress: () => (navigation as any).goBack() }
+      { text: 'OK', onPress: () => {
+        // Navigate back to Home tab
+        (navigation as any).navigate('Home');
+      }}
     ]);
   };
 
   return (
     <View style={styles.container}>
+      <AppHeader title="Add Character" />
       <Animated.View entering={FadeInDown.delay(100).springify()}>
         <Controller
           control={control}
